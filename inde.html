@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PlayScope</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#06110c;--panel:#0c1d15;--panel2:#10281d;--line:#1f3d2e;--g:#16a063;--lime:#6ee7a0;--gold:#d4af5f;--tx:#eef3ee;--mut:#8fa89a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--tx);font:400 15px/1.55 Manrope,system-ui,sans-serif;min-height:100vh}
+h1,h2,h3,.logo{font-family:'Bricolage Grotesque',Georgia,sans-serif;letter-spacing:-.02em}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.btn{background:var(--g);color:#04130b;font-weight:700;padding:13px 26px;border-radius:999px;transition:.2s}
+.btn:hover{background:var(--lime)}
+.ghost{border:1px solid var(--line);padding:9px 18px;border-radius:999px;color:var(--tx);font-size:14px;transition:.2s;text-decoration:none;display:inline-block}
+.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.logo{font-weight:800;font-size:22px;display:flex;align-items:center;gap:10px}
+.logo i{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--g),#0a5c3a);display:grid;place-items:center;font-style:normal;color:var(--gold);font-size:16px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 5vw;position:relative;z-index:3}
+/* hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;background:radial-gradient(70% 55% at 50% 38%,#0e6b43 0,#083322 45%,#04100a 100%)}
+.hero:before{content:"";position:absolute;inset:0;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M32 4l9 19 19 9-19 9-9 19-9-19-19-9 19-9z' fill='none' stroke='%23d4af5f' stroke-width='1'/%3E%3C/svg%3E")}
+.sky{position:absolute;left:0;right:0;bottom:0;width:100%;height:42%;opacity:.5}
+.hc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 6vw 90px;position:relative;z-index:2}
+.badge{border:1px solid #d4af5f66;color:var(--gold);padding:6px 16px;border-radius:999px;font-size:13px;margin-bottom:26px;background:#04100a66}
+.hc h1{font-size:clamp(38px,7vw,76px);line-height:1.02;max-width:900px;font-weight:800}
+.hc p{color:#c3d6ca;max-width:560px;margin:22px 0 34px;font-size:17px}
+.hf{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:16px 5vw;font-size:12.5px;color:#9db8a9;z-index:3;background:linear-gradient(transparent,#04100acc)}
+.hf b{color:var(--gold);font-weight:500}
+/* pages */
+.wrap{max-width:1120px;margin:0 auto;padding:0 5vw 70px}
+.top{display:flex;align-items:center;gap:14px;margin:6px 0 26px;flex-wrap:wrap}
+.back{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px;color:var(--mut)}
+.back:hover{color:var(--tx);border-color:var(--g)}
+h2.t{font-size:clamp(26px,4vw,40px)}
+.sub{color:var(--mut)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:30px}
+.big{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:38px 32px;text-align:left;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;transition:.25s;position:relative;overflow:hidden}
+.big:hover{border-color:var(--gold);transform:translateY(-3px)}
+.big h3{font-size:30px;margin-bottom:6px}
+.big span{color:var(--mut)}
+.big .n{position:absolute;top:26px;right:28px;font:800 64px 'Bricolage Grotesque';color:#16a06322}
+.search{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 18px;color:var(--tx);font:inherit;margin-bottom:24px}
+.search:focus{outline:none;border-color:var(--g)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.tm{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:left;display:flex;gap:14px;align-items:center;transition:.2s}
+.tm:hover{border-color:var(--g);background:var(--panel2)}
+.crest{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font:800 15px 'Bricolage Grotesque';color:#fff;flex:none}
+.tm b{display:block}.tm small{color:var(--mut)}
+.pc{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:left;display:flex;gap:14px;align-items:center;transition:.2s}
+.pc:hover{border-color:var(--gold)}
+.pc svg{width:54px;height:54px;border-radius:12px;flex:none}
+.pc b{display:block;line-height:1.25}.pc small{color:var(--mut);font-size:12.5px}
+.ov{margin-left:auto;font:800 24px 'Bricolage Grotesque';color:var(--lime)}
+.chip{display:inline-block;background:#16a06326;color:var(--lime);border-radius:6px;padding:1px 8px;font-size:12px;font-weight:700;margin-right:6px}
+.hd{margin:0 0 16px;font-size:18px;color:var(--mut)}
+/* profile */
+.card{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:24px;padding:clamp(22px,4vw,44px);min-height:480px;animation:in .35s}
+@keyframes in{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px}
+.arr{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);font-size:20px}
+.arr:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}.arr:disabled{opacity:.3;cursor:default}
+.dots{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+.dot{padding:6px 12px;border-radius:999px;font-size:13px;color:var(--mut);border:1px solid transparent}
+.dot.on{color:var(--tx);border-color:var(--g);background:#16a06322}
+.prof{display:grid;grid-template-columns:minmax(200px,300px) 1fr;gap:clamp(20px,4vw,48px);align-items:center}
+.ph{aspect-ratio:3/4;border-radius:20px;background:radial-gradient(circle at 50% 30%,#1c5a3f,#0a2218);overflow:hidden;border:1px solid var(--line)}
+.ph svg{width:100%;height:100%}
+.prof h2{font-size:clamp(30px,4.5vw,48px);line-height:1.05;margin-bottom:18px}
+dl{display:grid;grid-template-columns:auto 1fr;gap:8px 22px;margin-bottom:24px}
+dt{color:var(--mut)}dd{font-weight:700}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:16px}
+.seg button{padding:7px 20px;border-radius:999px;font-size:14px;color:var(--mut)}
+.seg .on{background:var(--g);color:#04130b;font-weight:700}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.st div{background:#04100a88;border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+.st b{display:block;font:800 34px 'Bricolage Grotesque';color:var(--lime)}.st small{color:var(--mut)}
+.sh{font-size:22px;margin-bottom:20px}
+.tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tags .rt{font:800 28px 'Bricolage Grotesque';background:var(--gold);color:#1a1405;border-radius:10px;padding:2px 12px}
+.tags span{color:var(--mut);margin-right:10px;font-size:13px}
+.tags em{font-style:normal;font-weight:700;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;color:var(--lime)}
+.tags em.m{background:#34d27a;color:#032611;border-color:#34d27a}
+.lg{display:flex;gap:16px;align-items:center;margin-top:12px;font-size:12.5px;color:var(--mut)}
+.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}.lg .a{background:#34d27a;box-shadow:0 0 0 2px var(--gold)}.lg .b{background:#34d27a}
+.pos{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:clamp(20px,4vw,48px);align-items:start}
+.pitch{position:relative;width:100%;aspect-ratio:3/4.3;border-radius:14px;border:2px solid #ffffff44;background:repeating-linear-gradient(0deg,#0d6a41 0 9%,#0b5d38 9% 18%)}
+.pitch u{position:absolute;border:2px solid #ffffff33;left:50%;transform:translateX(-50%);width:56%;height:15%}
+.pitch .tp{top:0;border-top:0}.pitch .bt{bottom:0;border-bottom:0}
+.pitch s{position:absolute;left:0;right:0;top:50%;border-top:2px solid #ffffff33}
+.pitch em{position:absolute;left:50%;top:50%;width:26%;aspect-ratio:1;border:2px solid #ffffff33;border-radius:50%;transform:translate(-50%,-50%)}
+.sq{position:absolute;width:11.5%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:7px;display:grid;place-items:center;font-size:10px;font-weight:700;background:#ffffff14;color:#ffffff66}
+.sq.on{background:#34d27a;color:#032611;box-shadow:0 0 0 2px #0b5d38,0 0 14px #34d27a99}
+.sq.main{box-shadow:0 0 0 2px #0b5d38,0 0 0 4px var(--gold),0 0 16px #34d27a}
+.sty{display:flex;flex-wrap:wrap;gap:9px}
+.sty span{border:1px solid var(--line);border-radius:10px;padding:8px 14px;color:var(--mut);font-size:14px}
+.sty .on{background:#16a06328;border-color:var(--g);color:var(--tx);font-weight:700}
+.ovr{display:flex;align-items:center;gap:18px;margin-bottom:24px}
+.ovr b{font:800 64px/1 'Bricolage Grotesque';color:var(--gold)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px 40px}
+.cols h4{color:var(--gold);font-weight:500;margin:14px 0 8px}
+.at{display:grid;grid-template-columns:1fr 34px;gap:2px 10px;margin-bottom:9px;font-size:13.5px}
+.at b{text-align:right;color:var(--lime)}
+.bar{grid-column:1/3;height:5px;background:#ffffff14;border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--lime));border-radius:4px}
+.val{display:flex;flex-direction:column;gap:26px}
+.vb{background:linear-gradient(135deg,#0f7a4d,#08341f);border:1px solid #d4af5f55;border-radius:22px;padding:36px}
+.vb small{color:#c3d6ca}.vb b{display:block;font:800 clamp(42px,8vw,78px)/1.05 'Bricolage Grotesque';color:var(--gold);margin-top:4px}
+.empty{color:var(--mut);padding:30px 0}
+footer{border-top:1px solid var(--line);padding:26px 5vw;color:var(--mut);font-size:13px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer b{color:var(--gold);font-weight:500}
+@media(max-width:700px){.prof,.pos{grid-template-columns:1fr}.ph{max-width:240px}.pitch{max-width:300px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body><div id="app"></div>
+<script>
+const rg=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const R=rg(2030),pick=a=>a[Math.floor(R()*a.length)],ri=(a,b)=>Math.floor(a+R()*(b-a+1)),cl=v=>Math.max(30,Math.min(105,Math.round(v)));
+const TEAMS=['Al Hilal','Al Nassr','Al Ittihad','Al Ahli','Al Shabab','Al Ettifaq','Al Taawoun','Al Fateh','Al Fayha','Al Raed','Damac','Al Khaleej','Al Okhdood','Al Riyadh','Abha','Al Kholood','Al Qadsiah','Neom'];
+const ACAD=['Al Hilal Academy','Al Nassr Academy','Al Ittihad Academy','Al Ahli Academy','Al Shabab Academy','Al Ettifaq Academy','Al Fateh Academy','Al Taawoun Academy'];
+const COL=['#1d4ed8','#d4a017','#c9a600','#0f9d58','#d9a400','#118a4a','#e0791a','#1f6fb5','#c0392b','#b91c1c','#7c3aed','#0e7490'];
+const F0=['Faisal','Abdullah','Mohammed','Khalid','Salem','Nasser','Turki','Saud','Fahad','Yazeed','Hamad','Rayan','Majed','Ziyad','Bandar','Ali','Omar','Talal','Sultan','Mansour'];
+const L0=['Al-Harbi','Al-Qahtani','Al-Otaibi','Al-Ghamdi','Al-Shehri','Al-Dosari','Al-Zahrani','Al-Mutairi','Al-Subaie','Al-Anazi','Al-Asmari','Al-Bishi','Al-Johani','Al-Rashidi'];
+const F1=['Lucas','Marco','Diego','Ibrahim','Karim','Joao','Mateo','Aleksandar','Youssef','Pedro'],L1=['Silva','Moreno','Haddad','Petrovic','Costa','Diallo','Santos','Ferreira','Benali','Ricci'],FN=['Brazil','Portugal','Morocco','Senegal','France','Serbia','Argentina','Egypt','Algeria'];
+const POS={GK:[50,92],CB:[50,78],LB:[13,72],RB:[87,72],DMF:[50,63],CMF:[50,52],LMF:[13,45],RMF:[87,45],AMF:[50,37],LWF:[15,21],RWF:[85,21],SS:[50,27],CF:[50,12]};
+const ALT={CF:['SS'],SS:['AMF','CF'],LWF:['LMF','SS'],RWF:['RMF','SS'],AMF:['CMF','SS'],CMF:['DMF','AMF'],DMF:['CMF','CB'],LMF:['LWF','LB'],RMF:['RWF','RB'],LB:['LMF'],RB:['RMF'],CB:['DMF'],GK:[]};
+const STY={CF:['Goal Poacher','Dummy Runner','Fox in the Box','Target Man'],SS:['Creative Playmaker','Dummy Runner','Extra Frontman'],LWF:['Prolific Winger','Roaming Flank','Cross Specialist'],RWF:['Prolific Winger','Roaming Flank','Cross Specialist'],AMF:['Classic No. 10','Hole Player','Creative Playmaker'],LMF:['Roaming Flank','Cross Specialist'],RMF:['Roaming Flank','Cross Specialist'],CMF:['Box-to-Box','Orchestrator','Hole Player'],DMF:['Anchor Man','The Destroyer','Orchestrator'],CB:['The Destroyer','Build Up'],LB:['Offensive Full-back','Defensive Full-back','Full-back Finisher'],RB:['Offensive Full-back','Defensive Full-back','Full-back Finisher'],GK:['Offensive Goalkeeper','Defensive Goalkeeper']};
+const ALLSTY=[...new Set(Object.values(STY).flat())];
+const SK=['Scissors Feint','Double Touch','Flip Flap','Marseille Turn','Sombrero','Chop Turn','Heading','Long Range Drive','Knuckle Shot','Dipping Shot','Acrobatic Finishing','First-time Shot','One-touch Pass','Through Passing','Weighted Pass','Pinpoint Pass','Curling Pass','Outside Curve','Rabona','No Look Pass','Low Lofted Pass','Man Marking','Track Back','Interception','Blocker','Aerial Superiority','Sliding Tackle','Acrobatic Clear','Captaincy','Fighting Spirit'];
+const GKS=['GK Low Punt','GK High Punt','Long Throw','GK Penalty Saver','GK Long Throw'];
+const OFF=['Attacking Awareness','Ball Control','Dribbling','Tight Possession','Low Pass','Lofted Pass','Finishing','Heading','Set Piece Taking','Curl'];
+const DEF=['Defensive Awareness','Tackling','Aggression','Defensive Engagement'];
+const ATH=['Speed','Acceleration','Kicking Power','Jumping','Physical Contact','Balance','Stamina'];
+const GKA=['GK Awareness','GK Catching','GK Parrying','GK Reflexes','GK Reach'];
+const SQUAD=['GK','GK','CB','CB','CB','LB','RB','DMF','CMF','CMF','AMF','LMF','RMF','LWF','RWF','SS','CF','CF'],ASQ=['GK','CB','CB','LB','RB','DMF','CMF','AMF','LWF','RWF','CF','SS'];
+const PL=[];
+function mk(club,pos,ac,i){
+ const fo=!ac&&R()<.38,gk=pos==='GK',att=['CF','SS','LWF','RWF','AMF','LMF','RMF'].includes(pos),df=['CB','LB','RB','DMF'].includes(pos);
+ const age=ac?ri(15,19):ri(19,36),base=ac?ri(52,70):ri(64,89),A={};
+ (gk?GKA:OFF).forEach(k=>A[k]=cl(base+(gk?3:att?5:df?-14:-4)+(R()-.5)*14));
+ if(!gk)DEF.forEach(k=>A[k]=cl(base+(att?-24:df?6:-6)+(R()-.5)*14));
+ ATH.forEach(k=>A[k]=cl(base+(R()-.5)*18));
+ const m=ri(8,ac?20:30),gr=att?.45:df?.05:.15,g=gk?0:Math.round(m*gr*R()*1.6),a=gk?0:Math.round(m*(att?.3:.15)*R()*1.6),y=Math.max(1,age-16);
+ const pool=gk?GKS:SK,sk=[...new Set(Array.from({length:ri(3,6)},()=>pick(pool)))],st=STY[pos];
+ return{id:PL.length,name:fo?pick(F1)+' '+pick(L1):pick(F0)+' '+pick(L0),nat:fo?pick(FN):'Saudi Arabia',club,ac,age,h:gk?ri(184,198):ri(165,194),foot:R()<.7?'Right':R()<.8?'Left':'Both',pos:[pos,...ALT[pos].filter(()=>R()<.6)],ovr:base,A,sty:[...new Set([pick(st),pick(st)])],sk,
+ val:ac?Math.round((base-40)*12)/1000:Math.round(Math.pow(base-52,2)/18*10)/10,m,g,a,cm:Math.round(m*y*.85),cg:Math.round(g*y*.85),ca:Math.round(a*y*.85),lg:ac?'ac':'spl'}}
+TEAMS.forEach(t=>SQUAD.forEach((p,i)=>PL.push(mk(t,p,0,i))));
+ACAD.forEach(t=>ASQ.forEach((p,i)=>PL.push(mk(t,p,1,i))));
+let ro=mk('Al Nassr','CF',0,0);Object.assign(ro,{name:'Cristiano Ronaldo',nat:'Portugal',age:41,h:187,foot:'Right',pos:['CF','SS','LWF'],ovr:91,sty:['Goal Poacher','Fox in the Box'],sk:['Heading','First-time Shot','Acrobatic Finishing','Long Range Drive','Knuckle Shot','Captaincy'],val:38.5,m:24,g:21,a:6,cm:1280,cg:880,ca:260});
+Object.keys(ro.A).forEach(k=>ro.A[k]=cl(84+(R()-.5)*10));Object.assign(ro.A,{Finishing:95,Heading:93,'Attacking Awareness':94,Jumping:92,'Set Piece Taking':88});PL.push(ro);
+let sa=mk('Al Hilal','CF',0,0);Object.assign(sa,{name:'Salman',nat:'India',age:24,h:175,foot:'Both',pos:['CF','SS','LWF','AMF'],ovr:105,sty:['Goal Poacher','Creative Playmaker','Prolific Winger','Classic No. 10'],sk:SK.slice(),val:250,m:30,g:45,a:30,cm:300,cg:420,ca:210});
+Object.keys(sa.A).forEach(k=>sa.A[k]=105);PL.push(sa);const FEAT=[ro.id,sa.id];
+const col=c=>COL[(c.length*7+c.charCodeAt(3))%COL.length];
+const ini=c=>c.replace('Academy','').trim().split(' ').map(w=>w[0]).join('').slice(0,2);
+const av=c=>`<svg viewBox="0 0 100 120" aria-hidden="true"><defs><linearGradient id="k${c.replace(/\W/g,'')}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col(c)}"/><stop offset="1" stop-color="#0a1f16"/></linearGradient></defs><rect width="100" height="120" fill="#0f2a1e"/><path d="M8 120c2-26 18-40 42-40s40 14 42 40z" fill="url(#k${c.replace(/\W/g,'')})"/><ellipse cx="50" cy="48" rx="19" ry="22" fill="#c8a07a" opacity=".85"/><path d="M31 44c0-14 8-22 19-22s19 8 19 22c-6-9-12-11-19-11s-13 2-19 11z" fill="#1a1410"/></svg>`;
+const money=(v,ac)=>ac?'SAR '+Math.round(v*1000)+'K':'SAR '+v.toFixed(1)+'M';
+const S={v:'home',lg:null,team:null,q:'',pid:null,sl:0,mode:0};
+const app=document.getElementById('app');
+const foot=`<footer><span>© 2026 PlayScope · Developed by <b>Salman</b></span><span>Demo model only. All players, ratings and values are fictional and not valid data.</span></footer>`;
+const mail='mailto:salmanhamdu987@gmail.com?subject=PlayScope%20enquiry';
+function go(o){Object.assign(S,o);draw();window.scrollTo(0,0)}
+function draw(){({home,pick:chooser,lg:league,pr:profile})[S.v]()}
+function home(){app.innerHTML=`<section class="hero"><nav><div class="logo"><i>◎</i>PlayScope</div><a class="ghost" href="${mail}">Get in touch</a></nav>
+<svg class="sky" viewBox="0 0 800 200" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g fill="#d4af5f" opacity=".55"><rect x="0" y="150" width="800" height="50" fill="#0a3a26"/><rect x="60" y="120" width="26" height="80"/><rect x="95" y="100" width="22" height="100"/><path d="M200 200V50q0-8 8-8h12l10 22 10-22h12q8 0 8 8v150z" opacity=".9"/><rect x="262" y="90" width="20" height="110"/><path d="M420 200l12-150h8l12 150z"/><circle cx="436" cy="48" r="10"/><rect x="500" y="110" width="30" height="90"/><rect x="540" y="80" width="24" height="120"/><path d="M620 200V70l22-30 22 30v130z"/><rect x="690" y="125" width="28" height="75"/><rect x="730" y="100" width="22" height="100"/></g></svg>
+<div class="hc"><span class="badge">Proudly aligned with Saudi Vision 2030</span><h1>Scout Saudi football talent, player by player.</h1><p>Detailed profiles, ratings and market values for Saudi Pro League players and the Kingdom’s rising academy stars.</p><button class="btn" onclick="go({v:'pick'})">Start scouting</button></div>
+<div class="hf">Developed by <b>Salman</b> · Demo model only, not valid data.</div></section>`}
+function chooser(){app.innerHTML=`<nav><div class="logo" style="cursor:pointer" onclick="go({v:'home'})"><i>◎</i>PlayScope</div><a class="ghost" href="${mail}">Get in touch</a></nav><div class="wrap"><div class="top"><button class="back" onclick="go({v:'home'})">← Home</button></div><h2 class="t">Choose a pool to explore</h2><p class="sub">Pick where you want to find players.</p>
+<div class="two"><button class="big" onclick="go({v:'lg',lg:'spl',team:null,q:''})"><i class="n">${PL.filter(p=>!p.ac).length}</i><h3>SPL players</h3><span>All ${TEAMS.length} Saudi Pro League squads with full attributes.</span></button>
+<button class="big" onclick="go({v:'lg',lg:'ac',team:null,q:''})"><i class="n">${PL.filter(p=>p.ac).length}</i><h3>Academy players</h3><span>Every academy prospect in one list, with the academy shown on each profile.</span></button></div></div>${foot}`}
+function league(){const ac=S.lg==='ac';app.innerHTML=`<nav><div class="logo" style="cursor:pointer" onclick="go({v:'home'})"><i>◎</i>PlayScope</div><a class="ghost" href="${mail}">Get in touch</a></nav><div class="wrap"><div class="top"><button class="back" id="bk">← Back</button><h2 class="t">${S.team||(ac?'Academy players':'Saudi Pro League')}</h2></div>
+<input class="search" id="q" placeholder="Search a player name, or a position like CF, GK, LB, winger" value="${S.q}" aria-label="Search players"><div id="res"></div></div>${foot}`;
+$('#bk').onclick=()=>S.team?go({team:null,q:''}):go({v:'pick'});$('#q').oninput=e=>{S.q=e.target.value;res()};res()}
+const $=s=>document.querySelector(s);
+const AL={striker:['CF'],forward:['CF','SS'],goalkeeper:['GK'],keeper:['GK'],winger:['LWF','RWF'],centreback:['CB'],fullback:['LB','RB'],midfielder:['CMF','DMF','AMF'],playmaker:['AMF']};
+function pcard(p){return`<button class="pc" onclick="go({v:'pr',pid:${p.id},sl:0,mode:0})">${av(p.club)}<div><b>${p.name}</b><small><span class="chip">${p.pos[0]}</span>${p.club}</small></div><span class="ov">${p.ovr}</span></button>`}
+function res(){const q=S.q.trim(),ql=q.toLowerCase().replace(/[\s-]/g,''),el=$('#res');let pool=PL.filter(p=>p.lg===S.lg&&(!S.team||p.club===S.team));
+ if(!q&&!S.team&&S.lg!=='ac'){const T=TEAMS;el.innerHTML=`<p class="hd">Featured</p><div class="grid" style="margin-bottom:30px">${FEAT.map(i=>pcard(PL[i])).join('')}</div><p class="hd">Teams</p><div class="grid">${T.map(t=>`<button class="tm" onclick="go({team:'${t}',q:''})"><span class="crest" style="background:${col(t)}">${ini(t)}</span><span><b>${t}</b><small>${PL.filter(p=>p.club===t).length} players</small></span></button>`).join('')}</div>`;return}
+ const codes=AL[ql]||(POS[q.toUpperCase()]?[q.toUpperCase()]:null);let h='',l;
+ if(codes){l=pool.filter(p=>codes.includes(p.pos[0])).sort((a,b)=>b.ovr-a.ovr).slice(0,12);h=`<p class="hd">Top ${codes.join(' / ')} players${S.team?' at '+S.team:''}</p>`}
+ else{l=pool.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b.ovr-a.ovr);if(!q)h=`<p class="hd">${l.length} players, highest rated first</p>`}
+ el.innerHTML=l.length?h+`<div class="grid">${l.map(pcard).join('')}</div>`:`<p class="empty">No players found. Try a name or a position code such as CF, CMF or RB.</p>`}
+function profile(){const p=PL[S.pid],sl=p.ac?['Profile','Position & style','Skills','Lock player']:['Profile','Position & style','Attributes','Skills','Value'];const n=sl.length,k=sl[S.sl];
+ app.innerHTML=`<nav><div class="logo" style="cursor:pointer" onclick="go({v:'home'})"><i>◎</i>PlayScope</div><a class="ghost" href="${mail}">Get in touch</a></nav><div class="wrap"><div class="top"><button class="back" onclick="go({v:'lg'})">← ${p.club}</button></div>
+<div class="card" id="cd">${body(p,k)}</div><div class="nav"><button class="arr" aria-label="Previous" ${S.sl?'':'disabled'} onclick="go({sl:S.sl-1})">‹</button><div class="dots">${sl.map((s,i)=>`<button class="dot ${i==S.sl?'on':''}" onclick="go({sl:${i}})">${s}</button>`).join('')}</div><button class="arr" aria-label="Next" ${S.sl<n-1?'':'disabled'} onclick="go({sl:S.sl+1})">›</button></div></div>${foot}`}
+function body(p,k){
+ if(k==='Profile'){const s=S.mode?[p.cm,p.cg,p.ca]:[p.m,p.g,p.a];return`<div class="prof"><div class="ph">${av(p.club)}</div><div><h2>${p.name}</h2><div class="tags"><b class="rt">${p.ovr}</b><span>Overall</span>${p.pos.map((c,i)=>`<em class="${i?'':'m'}">${c}</em>`).join('')}</div><dl><dt>Nation</dt><dd>${p.nat}</dd><dt>${p.ac?'Academy':'Club'}</dt><dd>${p.club}</dd><dt>Age</dt><dd>${p.age}</dd><dt>Height</dt><dd>${p.h} cm</dd><dt>Stronger foot</dt><dd>${p.foot}</dd></dl>
+<div class="seg"><button class="${S.mode?'':'on'}" onclick="go({mode:0})">${p.ac?'Academy':'SPL'}</button><button class="${S.mode?'on':''}" onclick="go({mode:1})">Career</button></div><div class="st"><div><b>${s[0]}</b><small>Matches played</small></div><div><b>${s[1]}</b><small>Goals</small></div><div><b>${s[2]}</b><small>Assists</small></div></div></div></div>`}
+ if(k==='Position & style')return`<div class="pos"><div><h3 class="sh">Position map</h3><div class="pitch"><u class="tp"></u><u class="bt"></u><s></s><em></em>${Object.entries(POS).map(([c,[x,y]])=>`<div class="sq ${p.pos.includes(c)?'on':''} ${p.pos[0]===c?'main':''}" style="left:${x}%;top:${y}%">${c}</div>`).join('')}</div><p class="lg"><span><i class="a"></i>Main position</span><span><i class="b"></i>Also plays</span></p></div><div><h3 class="sh">Playing style</h3><div class="sty">${ALLSTY.map(s=>`<span class="${p.sty.includes(s)?'on':''}">${s}</span>`).join('')}</div></div></div>`;
+ if(k==='Attributes'){const gk=p.pos[0]==='GK',G=gk?{Goalkeeping:GKA,Athletic:ATH}:{Offensive:OFF,Defensive:DEF,Athletic:ATH},r=a=>a.map(n=>`<div class="at"><span>${n}</span><b>${p.A[n]}</b><div class="bar"><i style="width:${p.A[n]/105*100}%"></i></div></div>`).join('');
+  return`<div class="ovr"><b>${p.ovr}</b><div><h3 class="sh" style="margin:0">Overall rating</h3><span class="sub">Scale 0 to 105</span></div></div><div class="cols">${Object.entries(G).map(([t,a])=>`<div><h4>${t}</h4>${r(a)}</div>`).join('')}</div>`}
+ if(k==='Skills')return`<h3 class="sh">Player skills</h3><div class="sty">${p.sk.map(s=>`<span class="on">${s}</span>`).join('')}</div>`;
+ if(p.ac){const mm=s=>mail.split('?')[0]+'?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent('Player: '+p.name+' ('+p.club+')');return`<div class="val"><h3 class="sh" style="margin:0">Interested in ${p.name}?</h3><div class="vb"><small>Academy player</small><b style="font-size:clamp(28px,5vw,44px)">No direct club deals</b></div><p class="sub" style="max-width:560px">Academy players are not transferred directly between clubs. Message PlayScope to start a conversation, or request a lock on this player and we will connect you with ${p.club}.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" style="text-decoration:none" href="${mm('Lock player: '+p.name)}">Lock player</a><a class="ghost" href="${mm('Message to PlayScope: '+p.name)}">Message PlayScope</a></div></div>`}
+ return`<div class="val"><h3 class="sh" style="margin:0">Market value</h3><div class="vb"><small>Estimated value</small><b>${money(p.val,p.ac)}</b></div><dl><dt>${p.ac?'Academy':'Current team'}</dt><dd>${p.club}</dd><dt>Position</dt><dd>${p.pos[0]}</dd><dt>Overall</dt><dd>${p.ovr}</dd></dl></div>`}
+document.addEventListener('keydown',e=>{if(S.v!=='pr')return;const n=PL[S.pid].ac?4:5;if(e.key==='ArrowRight'&&S.sl<n-1)go({sl:S.sl+1});if(e.key==='ArrowLeft'&&S.sl>0)go({sl:S.sl-1})});
+draw();
+</script></body></html>
